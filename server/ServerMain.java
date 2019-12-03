@@ -21,13 +21,14 @@ public class ServerMain {
         	serverSocket = new ServerSocket();
         	 String hostAddress = InetAddress.getLocalHost().getHostAddress();
              serverSocket.bind( new InetSocketAddress(hostAddress, 8080) );
-             System.out.println("접속 대기중");
-             //클라이언트와 연결 성공 후 스레드 start
+             System.out.println("waiting..");
+             //connect success to client
             while(true) {
                 Socket socket = serverSocket.accept(); 
-                System.out.println(socket.getInetAddress() +"로부터 연결요청이 들어왔습니다.");
+                System.out.println("Client IP:"+socket.getInetAddress());
                 
                 new ServerThread(socket, listWriters).start();
+                // One Client, one thread
                
             }
         }catch(IOException e) {

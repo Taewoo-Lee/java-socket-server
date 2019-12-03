@@ -60,7 +60,6 @@ public class DBMembers {
 			pstmt.setString(3, name);
 			pstmt.setString(4, phone);
 			pstmt.executeUpdate();
-//			System.out.println("Success");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,6 +77,7 @@ public class DBMembers {
             catch( SQLException e){
                 e.printStackTrace();
             }
+           
         }
 		
 	}
@@ -88,7 +88,7 @@ public class DBMembers {
         Statement stmt = null;
         ResultSet rs = null;
         
-        int success = -1; // 1:중복 0:중복x
+        int success = -1; // 1:exist 0:non exist
         
         try {
         	conn = DBconnect.connect();

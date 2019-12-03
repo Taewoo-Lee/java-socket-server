@@ -33,32 +33,43 @@ public class ServerThread extends Thread {
 		        String request = buffereedReader.readLine();
 
 		        if( request == null) {
-		            System.out.println("클라이언트로부터 연결 끊김");
+		            System.out.println("Lost connection from client");
 		            doQuit(printWriter);
 		            break;
 		        }
 		        
 		        String[] tokens = request.split(":");
+		        
                 if("join".equals(tokens[0])) {
                     doJoin(tokens[1], printWriter);
                 }
+                
                 else if("quit".equals(tokens[0])) {
                     doQuit(printWriter);
                 }
+                
                 else if("LogIn".equals(tokens[0])) {
                 	String pass = DBMembers.members_load(tokens[1]);
                 	
                 	printWriter.println(pass);
                 	printWriter.flush();
                 }
+                
                 else if("Register".equals(tokens[0])) {
                 	DBMembers.members_insert(tokens[1], tokens[2], tokens[3], tokens[4]);
+                }
+                
+                else if("checkID".equals(tokens[0])) {
+                	String check = String.valueOf(DBMembers.IDcheck(tokens[1]));
+                	
+                	printWriter.println(check);
+                	printWriter.flush();
                 }
 
 		    }
 		}
 			catch(IOException e) {
-				System.out.println(this.id + "접속 종료");
+				System.out.println(this.id + "exit from server");
 		}
 	}
 	
@@ -76,17 +87,17 @@ public class ServerThread extends Thread {
     private void doJoin(String id, PrintWriter writer) {
         this.id = id;
 
-        String data = id + "접속";
+        String data = id + "connect";
         broadcast(data);
 
-        // writer pool에 저장
+        //save to writer pool
         addWriter(writer);
     }
 	
     private void doQuit(PrintWriter writer) {
         removeWriter(writer);
 
-        String data = this.id + "접속 종료";
+        String data = this.id + "End Connection";
         broadcast(data);
     }
     
