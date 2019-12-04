@@ -150,4 +150,44 @@ public class DBItems {
         
         return onePage;
 	}
+	
+	
+	public static String itemsCount() {
+		
+		Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        String cnt = "";
+        
+        try {
+        	conn = DBconnect.connect();
+        	 stmt = conn.createStatement();
+        	 
+        	String sql = "SELECT COUNT([post_name) as cnt FROM items";
+        	rs = stmt.executeQuery(sql);
+        	
+        	while(rs.next()) {
+        	cnt = rs.getString(1);
+        	}
+        	
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( stmt != null && stmt.isClosed()){
+                    stmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return cnt;
+	}
 }
