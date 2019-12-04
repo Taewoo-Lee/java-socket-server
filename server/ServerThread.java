@@ -71,10 +71,19 @@ public class ServerThread extends Thread {
                 	printWriter.println(check);
                 	printWriter.flush();
                 }
+                else if("addItem".equals(tokens[0])) {
+                	DBItems.add(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]);
+                }
                 
                 else if("myInfo".equals(tokens[0])) {
                 	String InfoList = DBMembers.load_myInfo(tokens[1]);
                 	printWriter.println(InfoList);
+                	printWriter.flush();
+                }
+                
+                else if("loadOnePost".equals(tokens[0])) {
+                	String result = DBItems.loadOnePost(tokens[1]);
+                	printWriter.println(result);
                 	printWriter.flush();
                 }
 

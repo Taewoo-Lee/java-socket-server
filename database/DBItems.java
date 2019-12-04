@@ -24,7 +24,7 @@ public class DBItems {
 			
 			long time = System.currentTimeMillis(); 
 
-			SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd");
 			String pub_time = dayTime.format(new Date(time));
 			
 			pstmt = conn.prepareStatement(sql);
@@ -105,5 +105,49 @@ public class DBItems {
         }
         
         return ItemList;
+	}
+	
+
+	public static String loadOnePost(String post_num) {
+		
+		Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        String onePage="";
+        
+        try {
+        	conn = DBconnect.connect();
+        	stmt = conn.createStatement();
+        	 
+        	String sql = "SELECT post_name, kinds, post_by_id, limit_date, pub_date, price, content  From items WHERE post_num ="+post_num;
+        	rs = stmt.executeQuery(sql);
+        	while(rs.next()) {
+        		onePage += rs.getString(1);
+        		for(int i=2 ; i<=rs.getMetaData().getColumnCount(); i++){
+        				onePage += ":"+rs.getString(i);
+                }
+        	}
+        	
+        	
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( stmt != null && stmt.isClosed()){
+                    stmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return onePage;
 	}
 }
