@@ -17,7 +17,7 @@ public class ServerMain {
     	ServerSocket serverSocket = null;
     	List<PrintWriter> listWriters = new ArrayList<PrintWriter>();
    
-        try{
+        try{ 
         	serverSocket = new ServerSocket();
         	 String hostAddress = InetAddress.getLocalHost().getHostAddress();
              serverSocket.bind( new InetSocketAddress(hostAddress, 8080) );

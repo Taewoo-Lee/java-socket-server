@@ -39,7 +39,7 @@ public class ServerThread extends Thread {
 		        }
 		        
 		        String[] tokens = request.split(":");
-		        
+
                 if("join".equals(tokens[0])) {
                     doJoin(tokens[1], printWriter);
                 }
@@ -54,6 +54,12 @@ public class ServerThread extends Thread {
                 	printWriter.println(pass);
                 	printWriter.flush();
                 }
+                else if("MLogIn".equals(tokens[0])) {
+                	String pass = DBManagers.managers_load(tokens[1]);
+                	
+                	printWriter.println(pass);
+                	printWriter.flush();
+                }
                 
                 else if("Register".equals(tokens[0])) {
                 	DBMembers.members_insert(tokens[1], tokens[2], tokens[3], tokens[4]);
@@ -63,6 +69,12 @@ public class ServerThread extends Thread {
                 	String check = String.valueOf(DBMembers.IDcheck(tokens[1]));
                 	
                 	printWriter.println(check);
+                	printWriter.flush();
+                }
+                
+                else if("myInfo".equals(tokens[0])) {
+                	String InfoList = DBMembers.load_myInfo(tokens[1]);
+                	printWriter.println(InfoList);
                 	printWriter.flush();
                 }
 

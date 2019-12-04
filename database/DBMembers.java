@@ -121,9 +121,9 @@ public class DBMembers {
     return success;
 	}
 	
-	public static String[] load_myInfo(String id) {
-		String[] results = new String[2];
-		
+	
+	public static String load_myInfo(String id) {
+		String name = null, phone = null;
 		
 		Connection conn = null;
         Statement stmt = null;
@@ -137,8 +137,8 @@ public class DBMembers {
         	rs = stmt.executeQuery(sql);
         	
         	while(rs.next()) {
-        	results[0] = rs.getString(1);
-        	results[1] = rs.getString(2);
+        	name = rs.getString(1);
+        	phone = rs.getString(2);
         	}
         	
         } catch (Exception e) {
@@ -158,6 +158,7 @@ public class DBMembers {
                 e.printStackTrace();
             }
         }
-		return results;
+        
+		return name+":"+phone;
 	}
 }
