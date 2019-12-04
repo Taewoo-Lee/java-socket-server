@@ -86,6 +86,11 @@ public class ServerThread extends Thread {
                 	printWriter.println(result);
                 	printWriter.flush();
                 }
+                else if("itemsCnt".equals(tokens[0])) {
+                	String cnt = DBItems.itemsCount();
+                	printWriter.println(cnt);
+                	printWriter.flush();
+                }
 
 		    }
 		}

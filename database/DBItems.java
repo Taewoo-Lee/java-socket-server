@@ -164,7 +164,7 @@ public class DBItems {
         	conn = DBconnect.connect();
         	 stmt = conn.createStatement();
         	 
-        	String sql = "SELECT COUNT([post_name) as cnt FROM items";
+        	String sql = "SELECT COUNT(post_name) as cnt FROM items";
         	rs = stmt.executeQuery(sql);
         	
         	while(rs.next()) {
