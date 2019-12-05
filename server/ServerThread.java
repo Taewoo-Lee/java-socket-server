@@ -95,6 +95,10 @@ public class ServerThread extends Thread {
                 	printWriter.println(Items);
                 	printWriter.flush();
                 }
+		        
+                else if("deleteData".equals(tokens[0])) {
+                	DBManagers.deleteData(tokens[1]);
+                }
 
 		    }
 		}

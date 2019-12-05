@@ -44,4 +44,37 @@ public class DBManagers {
         }
         return password;
 	}
+	
+	
+	public static void deleteData(String post_num) {
+		Connection conn = null;
+        Statement stmt = null;
+        int rs;
+        
+        try {
+        	conn = DBconnect.connect();
+        	 stmt = conn.createStatement();
+        	 
+        	String sql = "DELETE FROM items WHERE post_num = "+post_num;
+        	rs = stmt.executeUpdate(sql);
+        	
+        	
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( stmt != null && stmt.isClosed()){
+                    stmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+	}
 }
