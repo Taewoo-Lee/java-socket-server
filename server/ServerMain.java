@@ -20,7 +20,6 @@ public class ServerMain {
         try{ 
         	serverSocket = new ServerSocket();
         	 String hostAddress = InetAddress.getLocalHost().getHostAddress();
-        	 System.out.println(hostAddress);
              serverSocket.bind( new InetSocketAddress(hostAddress, 8080) );
              System.out.println("waiting..");
              //connect success to client

@@ -36,6 +36,38 @@ public class DBrent {
             }
         }
 	}
+	
+	public static void returnItem(String post_num) {
+		Connection conn = null;
+        Statement stmt = null;
+
+        try {
+        	conn = DBconnect.connect();
+        	 stmt = conn.createStatement();
+        	String sql = "UPDATE items "+
+        				 "SET rent_state = 0, rent_id = 'NULL'"+
+        				 "WHERE post_num = "+post_num;
+        	stmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( stmt != null && stmt.isClosed()){
+                    stmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+	}
+	
 	public static String loadRentState(String post_num) {
 		String result = null;
 		
