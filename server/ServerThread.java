@@ -89,6 +89,11 @@ public class ServerThread extends Thread {
                 	printWriter.println(ThingsList);
                 	printWriter.flush();
                 }
+                else if("YourThings".equals(tokens[0])) {
+                	String ThingsList = DBThings.loadYourThings(tokens[1]);
+                	printWriter.println(ThingsList);
+                	printWriter.flush();;
+                }
                 
                 else if("loadItemList".equals(tokens[0])) {
                 	String Items = DBItems.loadItemList();
