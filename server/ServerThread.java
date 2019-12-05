@@ -107,6 +107,12 @@ public class ServerThread extends Thread {
                 else if("rent".equals(tokens[0])) {
                 	DBrent.rentItem(tokens[1], tokens[2]);
                 }
+                else if("rentSt".equals(tokens[0])) {
+                	String rs = DBrent.loadRentState(tokens[1]);
+                	
+                	printWriter.println(rs);
+                	printWriter.flush();
+                }
 
 		    }
 		}
