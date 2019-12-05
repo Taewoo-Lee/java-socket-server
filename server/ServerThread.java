@@ -41,16 +41,7 @@ public class ServerThread extends Thread {
 		        }
 		        
 		        String[] tokens = request.split(":");
-
-                if("join".equals(tokens[0])) {
-                    doJoin(tokens[1], printWriter);
-                }
-                
-                else if("quit".equals(tokens[0])) {
-                    doQuit(printWriter);
-                }
-                
-                else if("LogIn".equals(tokens[0])) {
+		        if("LogIn".equals(tokens[0])) {
                 	String pass = DBMembers.members_load(tokens[1]);
                 	
                 	printWriter.println(pass);
@@ -98,6 +89,12 @@ public class ServerThread extends Thread {
                 	printWriter.println(ThingsList);
                 	printWriter.flush();
                 }
+                
+                else if("loadItemList".equals(tokens[0])) {
+                	String Items = DBItems.loadItemList();
+                	printWriter.println(Items);
+                	printWriter.flush();
+                }
 
 		    }
 		}
@@ -110,21 +107,6 @@ public class ServerThread extends Thread {
         synchronized (listWriters) {
             listWriters.remove(writer);
         }
-    }
-    private void addWriter(PrintWriter writer) {
-        synchronized (listWriters) {
-            listWriters.add(writer);
-        }
-    }
-    
-    private void doJoin(String id, PrintWriter writer) {
-        this.id = id;
-
-        String data = id + "connect";
-        broadcast(data);
-
-        //save to writer pool
-        addWriter(writer);
     }
 	
     private void doQuit(PrintWriter writer) {

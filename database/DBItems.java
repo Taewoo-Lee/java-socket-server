@@ -63,51 +63,6 @@ public class DBItems {
 		
 	}
 	
-public static ArrayList<ArrayList<String>> loadItems() {
-		
-		Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        
-        ArrayList<ArrayList<String>> ItemList = new ArrayList<>();
-        
-        try {
-        	conn = DBconnect.connect();
-        	stmt = conn.createStatement();
-        	 
-        	String sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num From items";
-        	rs = stmt.executeQuery(sql);
-        	
-        	while(rs.next()) {
-        		ArrayList<String> row = new ArrayList<>();
-                for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
-                    //Iterate Column
-                    row.add(rs.getString(i));
-                }
-                ItemList.add(row);
-        	}
-        	
-        } catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		finally{
-            try{
-                if( conn != null && !conn.isClosed()){
-                    conn.close();
-                }
-                if( stmt != null && stmt.isClosed()){
-                    stmt.close();
-                }
-            }
-            catch( SQLException e){
-                e.printStackTrace();
-            }
-        }
-        
-        return ItemList;
-	}
-	
 
 	public static String loadOnePost(String post_num) {
 		
@@ -190,5 +145,48 @@ public static ArrayList<ArrayList<String>> loadItems() {
             }
         }
         return cnt;
+	}
+	
+	public static String loadItemList() {
+		
+		StringBuilder results = new StringBuilder();
+		
+		Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+        	conn = DBconnect.connect();
+        	stmt = conn.createStatement();
+        	 
+        	String sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num From items";
+        	rs = stmt.executeQuery(sql);
+        	while(rs.next()) {
+                for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
+                    //Iterate Column
+                    results.append(rs.getString(i)+"@@");
+                }
+                results.append("//");
+        	}
+        	
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( stmt != null && stmt.isClosed()){
+                    stmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return results.toString();
 	}
 }
