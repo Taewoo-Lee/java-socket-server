@@ -3,10 +3,12 @@ package server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import database.*;
@@ -89,6 +91,11 @@ public class ServerThread extends Thread {
                 else if("itemsCnt".equals(tokens[0])) {
                 	String cnt = DBItems.itemsCount();
                 	printWriter.println(cnt);
+                	printWriter.flush();
+                }
+                else if("MyThings".equals(tokens[0])) {
+                	String ThingsList = DBThings.loadMyThings(tokens[1]);
+                	printWriter.println(ThingsList);
                 	printWriter.flush();
                 }
 

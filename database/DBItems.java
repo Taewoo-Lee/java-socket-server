@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javafx.collections.FXCollections;
@@ -62,23 +63,23 @@ public class DBItems {
 		
 	}
 	
-	public static ObservableList loadItems() {
+public static ArrayList<ArrayList<String>> loadItems() {
 		
 		Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
         
-        ObservableList<ObservableList> ItemList = FXCollections.observableArrayList();
+        ArrayList<ArrayList<String>> ItemList = new ArrayList<>();
         
         try {
         	conn = DBconnect.connect();
         	stmt = conn.createStatement();
         	 
-        	String sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date From items";
+        	String sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num From items";
         	rs = stmt.executeQuery(sql);
         	
         	while(rs.next()) {
-        		ObservableList<String> row = FXCollections.observableArrayList();
+        		ArrayList<String> row = new ArrayList<>();
                 for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
                     //Iterate Column
                     row.add(rs.getString(i));
