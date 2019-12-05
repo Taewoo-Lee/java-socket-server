@@ -99,6 +99,9 @@ public class ServerThread extends Thread {
                 else if("deleteData".equals(tokens[0])) {
                 	DBManagers.deleteData(tokens[1]);
                 }
+                else if("rent".equals(tokens[0])) {
+                	DBrent.rentItem(tokens[1], tokens[2]);
+                }
 
 		    }
 		}
