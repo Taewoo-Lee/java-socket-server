@@ -116,6 +116,12 @@ public class ServerThread extends Thread {
                 	printWriter.println(rs);
                 	printWriter.flush();
                 }
+                else if("loadNoti".equals(tokens[0])) {
+                	String rs = DBrent.loadNotice(tokens[1]);
+                	
+                	printWriter.println(rs);
+                	printWriter.flush();
+                }
                 else if("returnItem".equals(tokens[0])) {
                 	DBrent.returnItem(tokens[1]);
                 }

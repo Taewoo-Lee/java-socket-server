@@ -149,7 +149,6 @@ public class DBrent {
 	
 	public static String loadNotice(String id) {
 		StringBuilder results = new StringBuilder();
-		String write_id = null, post_num = null, rent = null;
 		
 		Connection conn = null;
         Statement stmt = null;
@@ -163,14 +162,9 @@ public class DBrent {
         	rs = stmt.executeQuery(sql);
         	
         	while(rs.next()) {
-        		for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
-                    //Iterate Column
-                    results.append("님이 "+rs.getString(2)+"번 물건을 "+rs.getString(3)+"하셨습니다.@@");
+                    results.append(rs.getString(1)+"님이 "+rs.getString(2)+"번 물건을 "+rs.getString(3)+"하셨습니다.@@");
                 }
-        	write_id = rs.getString(1);
-        	post_num = rs.getString(2);
-        	rent = rs.getString(3);
-        	}
+        	
         	
         } catch (Exception e) {
 			e.printStackTrace();
