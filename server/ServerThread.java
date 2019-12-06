@@ -116,6 +116,13 @@ public class ServerThread extends Thread {
                 else if("returnItem".equals(tokens[0])) {
                 	DBrent.returnItem(tokens[1]);
                 }
+		        
+                else if("loadCat".equals(tokens[0])) {
+                	String list = DBItems.loadCategory(tokens[1]);
+                	
+                	printWriter.println(list);
+                	printWriter.flush();
+                }
 
 		    }
 		}

@@ -109,7 +109,7 @@ public class DBItems {
 	
 	
 	public static String itemsCount() {
-		
+
 		Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -188,5 +188,53 @@ public class DBItems {
         }
         
         return results.toString();
+	}
+	
+	
+	public static String loadCategory(String cat_name) {
+		StringBuilder itemList = new StringBuilder();
+		
+		Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+        	conn = DBconnect.connect();
+        	stmt = conn.createStatement();
+        	String sql;
+        	if(cat_name.equals("-1"))
+        		sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num, rent_state From items";
+        	else
+        		sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num, rent_state From items WHERE kinds = "+"'"+cat_name+"'";
+        	
+        	rs = stmt.executeQuery(sql);
+        	while(rs.next()) {
+                for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
+                    //Iterate Column
+                    itemList.append(rs.getString(i)+"@@");
+                }
+                itemList.append("//");
+        	}
+        	
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( stmt != null && stmt.isClosed()){
+                    stmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+		
+		return itemList.toString();
 	}
 }
