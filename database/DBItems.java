@@ -21,7 +21,7 @@ public class DBItems {
 		try {
 			conn = DBconnect.connect();
 			
-			String sql = "INSERT INTO items VALUES (null,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO items VALUES (null,?,?,?,?,?,?,?,?,?,?)";
 			
 			long time = System.currentTimeMillis(); 
 
@@ -38,8 +38,7 @@ public class DBItems {
 			pstmt.setString(7, content);
 			pstmt.setString(8, price);
 			pstmt.setString(9, limit_date);
-			pstmt.setString(10, "0");
-			pstmt.setString(11, pub_time); //pub_date
+			pstmt.setString(10, pub_time); //pub_date
 			
 			pstmt.executeUpdate();
 			
@@ -159,7 +158,7 @@ public class DBItems {
         	conn = DBconnect.connect();
         	stmt = conn.createStatement();
         	 
-        	String sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num, rent_state From items";
+        	String sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, rent_state From items";
         	rs = stmt.executeQuery(sql);
         	while(rs.next()) {
                 for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
@@ -203,9 +202,9 @@ public class DBItems {
         	stmt = conn.createStatement();
         	String sql;
         	if(cat_name.equals("-1"))
-        		sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num, rent_state From items";
+        		sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, rent_state From items";
         	else
-        		sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, like_num, rent_state From items WHERE kinds = "+"'"+cat_name+"'";
+        		sql = "SELECT post_num, post_name, kinds, post_by_id, limit_date, price, rent_state From items WHERE kinds = "+"'"+cat_name+"'";
         	
         	rs = stmt.executeQuery(sql);
         	while(rs.next()) {

@@ -1,9 +1,12 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DBrent {
 	public static void rentItem(String post_num, String rent_id) {
@@ -45,7 +48,7 @@ public class DBrent {
         	conn = DBconnect.connect();
         	 stmt = conn.createStatement();
         	String sql = "UPDATE items "+
-        				 "SET rent_state = 0, rent_id = 'NULL'"+
+        				 "SET rent_state = 0, rent_id = 'null'"+
         				 "WHERE post_num = "+post_num;
         	stmt.executeUpdate(sql);
 
@@ -105,6 +108,89 @@ public class DBrent {
         }
 		
 		return result;
+	}
+	
+	public static void addNotice(String read_id, String write_id, String post_num, String rent) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBconnect.connect();
+			
+			String sql = "INSERT INTO notification VALUES (null,?,?,?,?)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, read_id);
+			pstmt.setString(2, write_id);
+			pstmt.setString(3, post_num);
+			pstmt.setString(4, rent);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( pstmt != null && !pstmt.isClosed()){
+                    pstmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+		
+	}
+	
+	public static String loadNotice(String id) {
+		StringBuilder results = new StringBuilder();
+		String write_id = null, post_num = null, rent = null;
+		
+		Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+        	conn = DBconnect.connect();
+        	 stmt = conn.createStatement();
+        	 
+        	String sql = "SELECT write_id, post_num, rent  From notification WHERE read_id = "+"'"+id+"'";
+        	rs = stmt.executeQuery(sql);
+        	
+        	while(rs.next()) {
+        		for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
+                    //Iterate Column
+                    results.append("님이 "+rs.getString(2)+"번 물건을 "+rs.getString(3)+"하셨습니다.@@");
+                }
+        	write_id = rs.getString(1);
+        	post_num = rs.getString(2);
+        	rent = rs.getString(3);
+        	}
+        	
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+                if( stmt != null && stmt.isClosed()){
+                    stmt.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+		return results.toString();
 	}
 	
 }

@@ -21,7 +21,7 @@ public class DBThings {
         	conn = DBconnect.connect();
         	stmt = conn.createStatement();
         	 
-        	String sql = "SELECT post_num, kinds, post_name, rent_state, limit_date, price, like_num From items WHERE post_by_id = "+"'"+myID+"'";
+        	String sql = "SELECT post_num, kinds, post_name, rent_id, limit_date, price From items WHERE post_by_id = "+"'"+myID+"'";
         	rs = stmt.executeQuery(sql);
         	while(rs.next()) {
                 for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
@@ -65,7 +65,7 @@ public static String loadYourThings(String myID) {
         	conn = DBconnect.connect();
         	stmt = conn.createStatement();
         	 
-        	String sql = "SELECT post_num, kinds, post_name, limit_date, price, like_num From items WHERE rent_id = "+"'"+myID+"'";
+        	String sql = "SELECT post_num, kinds, post_name, limit_date, price From items WHERE rent_id = "+"'"+myID+"'";
         	rs = stmt.executeQuery(sql);
         	while(rs.next()) {
                 for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
