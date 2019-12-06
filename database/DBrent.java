@@ -164,7 +164,8 @@ public class DBrent {
         	while(rs.next()) {
                     results.append(rs.getString(1)+"님이 "+rs.getString(2)+"번 물건을 "+rs.getString(3)+"하셨습니다.@@");
                 }
-        	
+        	sql = "DELETE FROM notification WHERE read_id = "+"'"+id+"'";
+        	stmt.executeUpdate(sql);
         	
         } catch (Exception e) {
 			e.printStackTrace();
