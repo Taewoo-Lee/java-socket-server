@@ -12,7 +12,7 @@ public class DBrent {
 	public static void rentItem(String post_num, String rent_id) {
 		Connection conn = null;
         Statement stmt = null;
-   	 System.out.println(post_num+rent_id);
+
         try {
         	conn = DBconnect.connect();
         	 stmt = conn.createStatement();
