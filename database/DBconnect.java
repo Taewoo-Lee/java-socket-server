@@ -6,7 +6,7 @@ public class DBconnect {
 	 public static Connection connect() {
 		 
 		 	String usr = "h5seung";
-		 	String password = "seung1023";
+		 	String password = "#";
             String url = "jdbc:mysql://59.27.140.107:3306/h5seung?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
 
 	        Connection conn = null;
